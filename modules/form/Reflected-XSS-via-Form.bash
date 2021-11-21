@@ -3,16 +3,30 @@
 URL="${1}"
 SOURCECODE="${2}"
 
+function discordBot(){
+	MESSAGE1="${1}"
+	curl -v \
+		-H "Authorization: OTExNDkxNDU5NjI1MTQ0MzYw.YZiKkg.Bu3zNik2z26YgEd3LcNv2x1PJPU" \
+		-H "User-Agent: BashterXSS (http://github.com/riomulyadi/Bashter, v0.1)" \
+		-H "Content-Type: application/json" \
+		-X POST \
+		-d '{"content": "'"${MESSAGE1}"'"}' \
+		https://discord.com/api/webhooks/911501193715523595/sIepWYxHROpq_hbwhNW3eW8nDWskt2zc0aDLO4AKo2pbDlzmd34uO5KEmrPdNuBH-hWx
+}
+
 function PushAlert() {
 	URL="${1}"
 	METHOD="${2}"
 	PARAMS="${3}"
 	HOME_DIR="$(cd "$(dirname "$0")/../../" ; pwd -P)"
 	LOGFILE="${HOME_DIR}/scan-logs/$(echo "${URL}" | sed 's|/| |g' | awk '{print $2}')-issues.log"
+	result1="FATAL: XSS! Potential: Form [${METHOD}] Reflecting XSS on "${URL}" | HINT: (Form-Data): "${PARAMS}""
+	discordBot "${result1}"
 	echo "$(date +"[%H:%M:%S]") FATAL: XSS! Potential: Form [${METHOD}] Reflecting (\") on \"${URL}\""
 	echo "$(date +"[%H:%M:%S]") HINT: (Form-Data): ${PARAMS}"
 	echo "$(date +"[%H:%M:%S]") FATAL: XSS! Potential: Form [${METHOD}] Reflecting (\") on \"${URL}\"" >> ${LOGFILE}
 	echo "$(date +"[%H:%M:%S]") HINT: (Form-Data): ${PARAMS}" >> ${LOGFILE}
+
 }
 
 function XSSFormBased() {

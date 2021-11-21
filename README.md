@@ -9,6 +9,9 @@
 ## About:
 Bashter is a tool for scanning a Web-based Application. Bashter is very suitable for doing Bug Bounty or Penentration Testing. It is designed like a framework so you can easily add a script for detect vulnerability.
 
+#### Update: 
+- Discord Integration
+
 #### For Example
 To be more powerful, You can add something script (custom) like this:
 
